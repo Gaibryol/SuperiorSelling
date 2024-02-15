@@ -1,5 +1,4 @@
 ﻿using BepInEx;
-using BepInEx.Configuration;
 using BepInEx.Logging;
 using CSync.Lib;
 using GameNetcodeStuff;
@@ -38,11 +37,11 @@ namespace SuperiorSelling
 
 			Config = new(base.Config);
 
-			harmony.PatchAll(typeof(DepositItemsPatch));
-			harmony.PatchAll(typeof(PlayerControllerBPatch));
-			harmony.PatchAll(typeof(NetworkManagerPatch));
-			harmony.PatchAll(typeof(Config));
-			//harmony.PatchAll(Assembly.GetExecutingAssembly());
+			//harmony.PatchAll(typeof(DepositItemsPatch));
+			//harmony.PatchAll(typeof(PlayerControllerBPatch));
+			//harmony.PatchAll(typeof(NetworkManagerPatch));
+			//harmony.PatchAll(typeof(Config));
+			harmony.PatchAll(Assembly.GetExecutingAssembly());
 
 			// Plugin startup logic
 			Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_NAME} is loaded!");
@@ -53,7 +52,7 @@ namespace SuperiorSelling
 	{
 		public const string PLUGIN_GUID = "SuperiorSelling";
 		public const string PLUGIN_NAME = "SuperiorSelling";
-		public const string PLUGIN_VERSION = "1.0.0";
+		public const string PLUGIN_VERSION = "1.0.1";
 	}
 }
 
@@ -77,7 +76,15 @@ namespace SuperiorSelling.Patches
 				}
 
 				// Replace comparison
-				newInstructions[i] = new CodeInstruction(OpCodes.Ldc_I4_S, (Config.Instance.MaximumItems.Value == -1 ? int.MaxValue : Config.Instance.MaximumItems.Value));
+				if (Config.Instance.MaximumItems.Value <= 0)
+				{
+					newInstructions[i] = new CodeInstruction(OpCodes.Ldc_I4, int.MaxValue);
+				}
+				else
+				{
+					newInstructions[i] = new CodeInstruction(OpCodes.Ldc_I4, Config.Instance.MaximumItems.Value);
+				}
+				
             }
 			return newInstructions;
 		}
@@ -95,11 +102,11 @@ namespace SuperiorSelling.Patches
 				Config.MessageManager.RegisterNamedMessageHandler($"{PluginInfo.PLUGIN_GUID}_OnRequestConfigSync", Config.OnRequestSync);
 				Config.Synced = true;
 
-				Plugin.Logger.LogInfo("Initialize Is Host");
+				Plugin.Logger.LogError("Initialize Is Host");
 				return;
 			}
 
-			Plugin.Logger.LogInfo("Initialize Client");
+			Plugin.Logger.LogError("Initialize Client");
 			Config.Synced = false;
 			Config.MessageManager.RegisterNamedMessageHandler($"{PluginInfo.PLUGIN_GUID}_OnReceiveConfigSync", Config.OnReceiveSync);
 			Config.RequestSync();

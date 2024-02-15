@@ -21,8 +21,8 @@ namespace SuperiorSelling
 			MaximumItems = cfg.BindSyncedEntry(
 				"General",
 				"MaximumItemsToSell",
-				-1,
-				"Maximum amount of items that can be sold at once (Infinite = -1, Vanilla Lethal Company = 12)"
+				0,
+				"Maximum amount of items that can be sold at once (Infinite = 0, Vanilla Lethal Company = 12)"
 			);
 		}
 
@@ -39,6 +39,8 @@ namespace SuperiorSelling
 		internal static void OnRequestSync(ulong clientId, FastBufferReader _)
 		{
 			if (!IsHost) return;
+
+			Plugin.Logger.LogInfo($"Config sync request received from client: {clientId}");
 
 			byte[] array = SerializeToBytes(Instance);
 			int value = array.Length;
