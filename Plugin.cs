@@ -52,7 +52,7 @@ namespace SuperiorSelling
 	{
 		public const string PLUGIN_GUID = "SuperiorSelling";
 		public const string PLUGIN_NAME = "SuperiorSelling";
-		public const string PLUGIN_VERSION = "1.0.1";
+		public const string PLUGIN_VERSION = "1.0.2";
 	}
 }
 
@@ -87,40 +87,6 @@ namespace SuperiorSelling.Patches
 				
             }
 			return newInstructions;
-		}
-	}
-
-	[HarmonyPatch(typeof(PlayerControllerB))]
-	internal class PlayerControllerBPatch
-	{
-		[HarmonyPostfix]
-		[HarmonyPatch("ConnectClientToPlayerObject")]
-		public static void InitializeLocalPlayer()
-		{
-			if (Config.IsHost)
-			{
-				Config.MessageManager.RegisterNamedMessageHandler($"{PluginInfo.PLUGIN_GUID}_OnRequestConfigSync", Config.OnRequestSync);
-				Config.Synced = true;
-
-				Plugin.Logger.LogError("Initialize Is Host");
-				return;
-			}
-
-			Plugin.Logger.LogError("Initialize Client");
-			Config.Synced = false;
-			Config.MessageManager.RegisterNamedMessageHandler($"{PluginInfo.PLUGIN_GUID}_OnReceiveConfigSync", Config.OnReceiveSync);
-			Config.RequestSync();
-		}
-	}
-
-	[HarmonyPatch(typeof(GameNetworkManager))]
-	internal class NetworkManagerPatch
-	{
-		[HarmonyPostfix]
-		[HarmonyPatch("StartDisconnect")]
-		public static void PlayerLeave()
-		{
-			Config.RevertSync();
 		}
 	}
 }
