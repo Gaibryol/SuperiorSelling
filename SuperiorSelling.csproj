@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>SuperiorSelling</AssemblyName>
     <Description>Mod that removes the cap on the number of items on the sell counter on the company moon</Description>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
@@ -17,7 +17,6 @@
 		</PackageReference>
 		<PackageReference Include="BepInEx.Core" Version="5.4.21" />
 		<PackageReference Include="BepInEx.PluginInfoProps" Version="2.1.0" />
-		<PackageReference Include="Owen3H.BepInEx.CSync" Version="2.0.0" />
 		<PackageReference Include="UnityEngine.Modules" Version="2023.3.0-beta.6" IncludeAssets="compile" />
 	</ItemGroup>
 
@@ -36,8 +35,8 @@
 		<Reference Include="BepInEx">
 			<HintPath>C:\Users\gaibr\AppData\Roaming\Thunderstore Mod Manager\DataFolder\LethalCompany\profiles\Dev\BepInEx\core\BepInEx.dll</HintPath>
 		</Reference>
-		<Reference Include="CSync">
-			<HintPath>C:\Users\gaibr\AppData\Roaming\Thunderstore Mod Manager\DataFolder\LethalCompany\profiles\Dev\BepInEx\plugins\Owen3H-CSync\CSync.dll</HintPath>
+		<Reference Include="com.sigurd.csync">
+			<HintPath>C:\Users\gaibr\AppData\Roaming\Thunderstore Mod Manager\DataFolder\LethalCompany\profiles\Dev\BepInEx\plugins\Sigurd-CSync\CSync\com.sigurd.csync.dll</HintPath>
 		</Reference>
 		<Reference Include="Unity.Collections">
 			<HintPath>..\..\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.Collections.dll</HintPath>

@@ -15,7 +15,6 @@ using UnityEngine;
 namespace SuperiorSelling
 {
 	[BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
-	[BepInDependency("io.github.CSync")]
 	public class Plugin : BaseUnityPlugin
 	{
 		private readonly Harmony harmony = new Harmony(PluginInfo.PLUGIN_GUID);
@@ -52,7 +51,7 @@ namespace SuperiorSelling
 	{
 		public const string PLUGIN_GUID = "SuperiorSelling";
 		public const string PLUGIN_NAME = "SuperiorSelling";
-		public const string PLUGIN_VERSION = "1.0.2";
+		public const string PLUGIN_VERSION = "1.0.3";
 	}
 }
 
